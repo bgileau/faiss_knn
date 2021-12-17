@@ -37,6 +37,7 @@ class FaissKNNImpl:
             # except Exception as e:
             #     raise Exception(e)
         if convert_to_float and not isinstance(arr, np.float32):
+            print(f"Warning, a passed argument is not of type float32 in function {function_name}. Using np.type first. If you will be calling this often on large data, take care of this yourself.")
             arr = arr.astype('float32')
 
         return arr
