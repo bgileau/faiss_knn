@@ -37,6 +37,7 @@ class FaissKNNImpl:
             # except Exception as e:
             #     raise Exception(e)
         if convert_to_float and not isinstance(arr, np.float32):
+            print(f"Warning, a passed argument is not of type float32 in function {function_name}. Using np.type first. If you will be calling this often on large data, take care of this yourself.")
             arr = arr.astype('float32')
 
         return arr
@@ -60,7 +61,7 @@ class FaissKNNImpl:
 
         no_of_gpus = self.faissIns.get_num_gpus()
         self.train_labels = train_labels
-        self.gpu_index_flat = self.index = self.faissIns.IndexFlatL2(train_features.shape[1])   # build the index 
+        self.gpu_index_flat = self.index = self.faissIns.GpuIndexFlatL2(train_features.shape[1])   # build the index 
         if no_of_gpus > 0:
             self.gpu_index_flat = self.faissIns.index_cpu_to_all_gpus(self.index) 
             
